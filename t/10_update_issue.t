@@ -1,5 +1,5 @@
 use strict;
-use Test::More tests => 2;
+use Test::More tests => 4;
 
 use WebService::Backlog;
 use WebService::Backlog::UpdateIssue;
@@ -24,5 +24,17 @@ my $summary = 'Issue updated by WebService::Backlog!';
     ok($updateissue);
     is( Dumper( $updateissue->hash ),
         Dumper( { key => $key, summary => $summary } ) );
+}
+{
+    my $updateissue = WebService::Backlog::UpdateIssue->new(
+        {
+            key        => $key,
+            summary    => $summary,
+            assignerId => "",
+        }
+    );
+    ok($updateissue);
+    is( Dumper( $updateissue->hash ),
+        Dumper( { key => $key, summary => $summary, assignerId => "" } ) );
 }
 

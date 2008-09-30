@@ -1,5 +1,8 @@
 Revision history for Perl extension WebService::Backlog
 
+0.05     2008-09-30 10:48:33 JST
+         - Added parameter "assignerId" to CreateIssue.pm.
+
 0.04     2008-05-07 21:24:53 JST
          - Impletemt multi "Category|Version|Milestone".
          

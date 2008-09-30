@@ -1,5 +1,5 @@
 use strict;
-use Test::More tests => 5;
+use Test::More tests => 7;
 
 use WebService::Backlog;
 use WebService::Backlog::CreateIssue;
@@ -23,6 +23,21 @@ my $summary = 'Issue created by WebService::Backlog!';
     ok($newissue);
     is( Dumper( $newissue->hash ),
         Dumper( { projectId => 5432, summary => $summary } ) );
+}
+
+{
+    my $newissue = WebService::Backlog::CreateIssue->new(
+        {
+            projectId  => 5432,
+            summary    => $summary,
+            assignerId => 331,
+        }
+    );
+    ok($newissue);
+    is(
+        Dumper( $newissue->hash ),
+        Dumper( { projectId => 5432, summary => $summary, assignerId => 331 } )
+    );
 }
 
 SKIP: {
