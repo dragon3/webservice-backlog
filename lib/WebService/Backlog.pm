@@ -340,8 +340,11 @@ it under the same terms as Perl itself.
 
 =head1 SEE ALSO
 
-Backlog : http://www.backlog.jp/
+    Backlog : http://www.backlog.jp/
 Backlog API : http://www.backlog.jp/api/
+
+Source code : http://github.com/dragon3/webservice-backlog/tree/master
+              git://github.com/dragon3/webservice-backlog.git
 
 =cut
 
