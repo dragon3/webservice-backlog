@@ -8,7 +8,9 @@ use warnings;
 use base qw(Class::Accessor::Fast);
 
 my @PARAMS = qw/
-  key summary description due_date
+  key summary description
+  start_date due_date
+  estimated_hours actual_hours
   issueTypeId priorityId componentId resolutionId versionId milestoneId
   assignerId comment
   /;
@@ -19,7 +21,7 @@ sub hash {
     my $self = shift;
     my $hash = {};
     for my $p (@PARAMS) {
-        $hash->{$p} = $self->$p if (defined $self->$p);
+        $hash->{$p} = $self->$p if ( defined $self->$p );
     }
     return $hash;
 }

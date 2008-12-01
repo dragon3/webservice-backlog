@@ -8,7 +8,9 @@ use warnings;
 use base qw(Class::Accessor::Fast);
 
 my @PARAMS = qw/
-  projectId summary description due_date
+  projectId summary description
+  start_date due_date
+  estimated_hours actual_hours
   issueTypeId priorityId componentId resolutionId versionId  milestoneId
   assignerId
   /;

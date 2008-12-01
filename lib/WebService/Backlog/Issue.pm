@@ -8,7 +8,10 @@ use warnings;
 use base qw(Class::Accessor::Fast);
 __PACKAGE__->mk_accessors(
     qw/
-      id key summary description url due_date created_on updated_on
+      id key summary description url
+      start_date due_date
+      estimated_hours actual_hours
+      created_on updated_on
       issueType priority
       component components
       resolution
