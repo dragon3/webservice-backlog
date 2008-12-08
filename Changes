@@ -1,7 +1,10 @@
 Revision history for Perl extension WebService::Backlog
 
+0.07     2008-12-08 10:25:55 JST
+         - Fixed test.
+
 0.06     2008-11-26 15:00:59 JST
-		 - Added column "start_date", "estimated_hours", "actual_hours" to "Issue".
+         - Added column "start_date", "estimated_hours", "actual_hours" to "Issue".
 
 0.05     2008-09-30 10:48:33 JST
          - Added parameter "assignerId" to CreateIssue.pm.

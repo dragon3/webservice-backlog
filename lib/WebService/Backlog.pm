@@ -5,7 +5,7 @@ package WebService::Backlog;
 use strict;
 use 5.008001;
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 use Carp;
 use RPC::XML::Client;
