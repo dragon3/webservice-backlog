@@ -12,4 +12,4 @@
 \.shipit
 ^t/9\d_.*\.t
 \.svn
-
+\.git
