@@ -296,7 +296,7 @@ WebService::Backlog - Perl interface to Backlog.
 =head1 DESCRIPTION
 
 WebService::Backlog provides interface to Backlog.
-Backlog is a web based project collaboration tool.
+Backlog is a web based project collaboration & communication tool.
 
 For more information on Backlog, visit the Backlog website. http://www.backlog.jp/
 
@@ -304,21 +304,88 @@ For more information on Backlog, visit the Backlog website. http://www.backlog.j
 
 =head2 new
 
+Returns a new WebService::Backlog object.
+
+ my $backlog = WebService::Backlog->new(
+   space    => 'yourspaceid',
+   username => 'username',
+   password => 'password'
+ );
+
+Parameters below must be specified.
+
+ space    ... your space id
+ username ... your username in this space
+ password ... your passwrord
+
 =head2 getProjects
+
+Returns a list of all projects you join.
+
+ my $projects = $backlog->getProjects;
+
+This method returns a reference to array of WebService::Backlog::Project.
 
 =head2 getProject
 
+Retrieve a specific project by id or key.
+
+  my $project_by_id = $backlog->getProject(123);
+  my $project_by_key = $backlog->getProject("BLG");
+
 =head2 getComponents
+
+Returns a list of all components(categories) of project.
+
+  my $components = $backlog->getComponents( $project_id );
+
+This method returns a reference to array of WebService::Backlog::Component.
 
 =head2 getVersions
 
+Returns a list of all versions(milestones) of project.
+
+  my $versions = $backlog->getVersions( $project_id );
+
+This method returns a reference to array of WebService::Backlog::Version.
+
 =head2 getUsers
+
+Returns a list of all users who join this project.
+
+  my $users = $backlog->getUsers( $project_id );
+
+This method returns a reference to array of WebService::Backlog::User.
 
 =head2 getIssue
 
+Retrieve a specific issue by key or id.
+
+  my $issue_by_id = $backlog->getIssue( 123 );
+  my $issue_by_key = $backlog->getIssue( "BLG-11" );
+
 =head2 getComments
 
+Returns a list of all comments of this issue.
+
+  my $comments = $backlog->getComments( $issue_id );
+
+This method returns a reference to array of WebService::Backlog::Comment.
+
 =head2 countIssue
+
+Returns count of issues by condition.
+
+  my $issue_count = $backlog->countIssue( $condition );
+
+Argument C<$condition> is object of WebService::Backlog::FindCondition or reference of HASH.
+
+  # FindCondition
+  my $condition = WebService::Backlog::FindCondition->new({ projectId => 123, statusId => [1,2,3] });
+  my $count = $backlog->countIssue($condition);
+
+  # HASH condision
+  my $count_by_hash = $backlog->countIssue({ projectId => 123, statusId => [1,2,3] });
 
 =head2 findIssue
 
