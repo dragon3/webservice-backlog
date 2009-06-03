@@ -1,5 +1,9 @@
 Revision history for Perl extension WebService::Backlog
 
+0.08     2009-06-03 14:05:21 JST
+         - Added condition parameters about span ( e.g. created_on_min ... ).
+         - Added POD.
+
 0.07     2008-12-08 10:25:55 JST
          - Fixed test.
 

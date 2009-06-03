@@ -164,5 +164,10 @@ sub assigner {
     return $self->_assigner_accessor;
 }
 
+sub assignee {
+    my $self = shift;
+    return $self->assigner(@_);
+}
+
 1;
 __END__

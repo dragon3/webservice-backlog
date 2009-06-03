@@ -20,3 +20,4 @@ getVersions
 switchStatus
 updateIssue
 API
+statusId

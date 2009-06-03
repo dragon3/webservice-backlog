@@ -5,7 +5,7 @@ package WebService::Backlog;
 use strict;
 use 5.008001;
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 use Carp;
 use RPC::XML::Client;
@@ -226,8 +226,7 @@ sub updateIssue {
               . ref($arg)
               . ']' );
     }
-    croak("key must be specified.")     unless ( $issue->key );
-    croak("summary must be specified.") unless ( $issue->summary );
+    croak("key must be specified.") unless ( $issue->key );
 
     my $req = RPC::XML::request->new( 'backlog.updateIssue', $issue->hash );
     my $res = $self->{client}->send_request($req);
@@ -389,12 +388,95 @@ Argument C<$condition> is object of WebService::Backlog::FindCondition or refere
 
 =head2 findIssue
 
+Returns a list of issues by condition.
+
+  my $issues = $backlog->findIssue( $condition );
+
+Argument C<$condition> is object of WebService::Backlog::FindCondition or reference of HASH.
+
+  # FindCondition
+  my $condition = WebService::Backlog::FindCondition->new({ projectId => 123, statusId => [1,2,3] });
+  my $count = $backlog->countIssue($condition);
+
+  # HASH condision
+  my $count_by_hash = $backlog->countIssue({ projectId => 123, statusId => [1,2,3] });
+
 =head2 createIssue
+
+Create new issue.
+
+  my $issue = $backlog->createIssue( $create_issue );
+
+Argument C<$create_issue> is object of WebService::Backlog::CreateIssue or reference of HASH.
+
+  # CreateIssue
+  my $create_issue = WebService::Backlog::CreateIssue->new({
+    projectId   => 123,
+    summary     => 'This is new issue.',
+    description => 'This is new issue about ...',
+  });
+  my $issue = $backlog->createIssue($create_issue);
+
+  # HASH condision
+  my $issue_by_hash = $backlog->createIssue({
+    projectId   => 123,
+    summary     => 'This is new issue.',
+    description => 'This is new issue about ...',
+  });
 
 =head2 updateIssue
 
+Update a issue.
+
+  my $issue = $backlog->updateIssue( $update_issue );
+
+Argument C<$update_issue> is object of WebService::Backlog::UpdateIssue or reference of HASH.
+
+  # UpdateIssue
+  my $update_issue = WebService::Backlog::UpdateIssue->new({
+    key     => 'BLG-123',
+    comment => 'This is comment',
+  });
+  my $issue = $backlog->updateIssue($update_issue);
+
+  # HASH condision
+  my $issue_by_hash = $backlog->updateIssue({
+    key     => 'BLG-123',
+    comment => 'This is comment',
+  });
+
+Argument parameter 'key' is required.
+
 =head2 switchStatus
 
+Switch status of issue.
+
+  my $issue = $backlog->switchStatus( $switch_status );
+
+Argument C<$switch_status> is object of WebService::Backlog::SwitchStatus or reference of HASH.
+
+  # SwitchStatus
+  my $switch_status = WebService::Backlog::SwitchStatus->new({
+    key      => 'BLG-123',
+    statusId => 2,
+    comment  => 'I get to work',
+  });
+  my $issue = $backlog->switchStatus($switch_status);
+
+  # HASH condision
+  my $issue_by_hash = $backlog->switchStatus({
+    key      => 'BLG-123',
+    statusId => 2,
+    comment  => 'I get to work',
+  });
+
+Argument parameters 'key' and 'statusId' are required.
+
+statusId value means
+  1: Open
+  2: In Progress
+  3: Resolved
+  4: Closed
 
 =head1 AUTHOR
 
@@ -407,11 +489,17 @@ it under the same terms as Perl itself.
 
 =head1 SEE ALSO
 
-    Backlog : http://www.backlog.jp/
-Backlog API : http://www.backlog.jp/api/
+=over
 
-Source code : http://github.com/dragon3/webservice-backlog/tree/master
-              git://github.com/dragon3/webservice-backlog.git
+=item Backlog
+
+http://www.backlog.jp/
+
+=item Backlog API
+
+http://www.backlog.jp/api/
+
+=back
 
 =cut
 
