@@ -21,6 +21,8 @@ use WebService::Backlog::CreateIssue;
 use WebService::Backlog::UpdateIssue;
 use WebService::Backlog::SwitchStatus;
 
+$RPC::XML::ENCODING = 'utf8';
+
 sub new {
     my ( $class, %args ) = @_;
     croak('space must be specified')    unless ( defined $args{space} );
