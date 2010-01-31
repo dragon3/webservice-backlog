@@ -13,6 +13,7 @@ my @PARAMS = qw/
   estimated_hours actual_hours
   issueTypeId priorityId componentId resolutionId versionId milestoneId
   assignerId comment
+  statusId
   /;
 
 __PACKAGE__->mk_accessors(@PARAMS);

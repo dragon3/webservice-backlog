@@ -264,6 +264,33 @@ sub switchStatus {
     return WebService::Backlog::Issue->new( $res->value );
 }
 
+sub updateIssueAndSwitchStatus {
+    my ( $self, $arg ) = @_;
+    my $issue;
+    if ( ref($arg) eq 'WebService::Backlog::UpdateIssue' ) {
+        $issue = $arg;
+    }
+    elsif ( ref($arg) eq 'HASH' ) {
+        $issue = WebService::Backlog::UpdateIssue->new($arg);
+    }
+    else {
+        croak(  'arg must be WebService::Backlog::UpdateIssue object'
+              . ' or reference to hash. ['
+              . ref($arg)
+              . ']' );
+    }
+    croak("key must be specified.") unless ( $issue->key );
+
+    my $req = RPC::XML::request->new( 'backlog.updateIssueAndSwitchStatus',
+        $issue->hash );
+    my $res = $self->{client}->send_request($req);
+    croak "Error backlog.updateIssueAndSwitchStatus : "
+      . $res->value->{faultString}
+      if ( $res->is_fault );
+
+    return WebService::Backlog::Issue->new( $res->value );
+}
+
 1;
 __END__
 
