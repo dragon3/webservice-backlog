@@ -1,11 +1,11 @@
 package WebService::Backlog;
 
-# $Id: Backlog.pm 600 2008-05-09 13:48:50Z yamamoto $
-
 use strict;
+use warnings;
+
 use 5.008001;
 
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 use Carp;
 use RPC::XML::Client;
@@ -266,6 +266,33 @@ sub switchStatus {
       if ( $res->is_fault );
 
     return WebService::Backlog::Issue->new( $res->value );
+}
+
+sub addIssueType {
+    my ( $self, $arg ) = @_;
+    my $it;
+    if ( ref($arg) eq 'WebService::Backlog::SwitchStatus' ) {
+        $it = $arg;
+    }
+    elsif ( ref($arg) eq 'HASH' ) {
+        $it = WebService::Backlog::IssueType->new($arg);
+    }
+    else {
+        croak(  'arg must be WebService::Backlog::IssueType object'
+              . ' or reference to hash. ['
+              . ref($arg)
+              . ']' );
+    }
+    croak("project_id must be specified.") unless ( $it->project_id );
+    croak("name must be specified.")       unless ( $it->name );
+    croak("color must be specified.")      unless ( $it->color );
+
+    my $req = RPC::XML::request->new( 'backlog.addIssueType', $it->hash );
+    my $res = $self->{client}->send_request($req);
+    croak "Error backlog.addIssueType : " . $res->value->{faultString}
+      if ( $res->is_fault );
+
+    return WebService::Backlog::IssueType->new( $res->value );
 }
 
 1;

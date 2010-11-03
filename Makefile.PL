@@ -9,5 +9,7 @@ requires 'Crypt::SSLeay';
 
 test_requires 'Test::More';
 test_requires 'Test::TCP';
+test_requires 'Plack::Loader';
+test_requires 'Plack::Request';
 
 WriteAll;

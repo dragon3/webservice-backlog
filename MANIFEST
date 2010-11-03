@@ -47,6 +47,7 @@ t/09_create_issue.t
 t/10_update_issue.t
 t/11_switch_status.t
 t/12_new.t
+t/13_add_issue.t
 t/20_issue.t
 t/Changes
 t/example/issues2excel.pl
