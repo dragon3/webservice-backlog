@@ -25,12 +25,16 @@ $RPC::XML::ENCODING = 'utf8';
 
 sub new {
     my ( $class, %args ) = @_;
-    croak('space must be specified')    unless ( defined $args{space} );
+    croak('space must be specified')
+      unless ( defined $args{space} || defined $args{url} );
     croak('username must be specified') unless ( defined $args{username} );
     croak('password must be specified') unless ( defined $args{password} );
 
     my $client = RPC::XML::Client->new(
-        'https://' . $args{space} . '.backlog.jp/XML-RPC' );
+        defined $args{url}
+        ? $args{url}
+        : 'https://' . $args{space} . '.backlog.jp/XML-RPC'
+    );
     $client->credentials( 'Backlog Basic Authenticate',
         $args{username}, $args{password} );
     $client->useragent->parse_head(0);

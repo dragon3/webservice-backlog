@@ -7,8 +7,7 @@ requires 'Carp';
 requires 'RPC::XML';
 requires 'Crypt::SSLeay';
 
-build_requires 'Test::More';
+test_requires 'Test::More';
+test_requires 'Test::TCP';
 
-use_test_base;
-auto_include;
 WriteAll;
