@@ -42,4 +42,5 @@ t/11_switch_status.t
 t/12_new.t
 t/13_add_issue_type.t
 t/14_update_issue_type.t
+t/15_delete_issue_type.t
 t/20_issue.t
