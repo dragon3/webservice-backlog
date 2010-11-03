@@ -21,6 +21,9 @@ use WebService::Backlog::CreateIssue;
 use WebService::Backlog::UpdateIssue;
 use WebService::Backlog::SwitchStatus;
 
+use WebService::Backlog::IssueType;
+use WebService::Backlog::DeleteIssueType;
+
 $RPC::XML::ENCODING = 'utf8';
 
 sub new {
@@ -271,7 +274,7 @@ sub switchStatus {
 sub addIssueType {
     my ( $self, $arg ) = @_;
     my $it;
-    if ( ref($arg) eq 'WebService::Backlog::SwitchStatus' ) {
+    if ( ref($arg) eq 'WebService::Backlog::IssueType' ) {
         $it = $arg;
     }
     elsif ( ref($arg) eq 'HASH' ) {
@@ -290,6 +293,58 @@ sub addIssueType {
     my $req = RPC::XML::request->new( 'backlog.addIssueType', $it->hash );
     my $res = $self->{client}->send_request($req);
     croak "Error backlog.addIssueType : " . $res->value->{faultString}
+      if ( $res->is_fault );
+
+    return WebService::Backlog::IssueType->new( $res->value );
+}
+
+sub updateIssueType {
+    my ( $self, $arg ) = @_;
+    my $it;
+    if ( ref($arg) eq 'WebService::Backlog::IssueType' ) {
+        $it = $arg;
+    }
+    elsif ( ref($arg) eq 'HASH' ) {
+        $it = WebService::Backlog::IssueType->new($arg);
+    }
+    else {
+        croak(  'arg must be WebService::Backlog::IssueType object'
+              . ' or reference to hash. ['
+              . ref($arg)
+              . ']' );
+    }
+    croak("id must be specified.")    unless ( $it->id );
+    croak("name must be specified.")  unless ( $it->name );
+    croak("color must be specified.") unless ( $it->color );
+
+    my $req = RPC::XML::request->new( 'backlog.updateIssueType', $it->hash );
+    my $res = $self->{client}->send_request($req);
+    croak "Error backlog.updateIssueType : " . $res->value->{faultString}
+      if ( $res->is_fault );
+
+    return WebService::Backlog::IssueType->new( $res->value );
+}
+
+sub deleteIssueType {
+    my ( $self, $arg ) = @_;
+    my $it;
+    if ( ref($arg) eq 'WebService::Backlog::DeleteIssueType' ) {
+        $it = $arg;
+    }
+    elsif ( ref($arg) eq 'HASH' ) {
+        $it = WebService::Backlog::DeleteIssueType->new($arg);
+    }
+    else {
+        croak(  'arg must be WebService::Backlog::DeleteIssueType object'
+              . ' or reference to hash. ['
+              . ref($arg)
+              . ']' );
+    }
+    croak("id must be specified.") unless ( $it->id );
+
+    my $req = RPC::XML::request->new( 'backlog.deleteIssueType', $it->hash );
+    my $res = $self->{client}->send_request($req);
+    croak "Error backlog.updateIssueType : " . $res->value->{faultString}
       if ( $res->is_fault );
 
     return WebService::Backlog::IssueType->new( $res->value );
