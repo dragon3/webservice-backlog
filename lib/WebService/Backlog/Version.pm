@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use base qw(Class::Accessor::Fast);
-my @PARAMS = qw/id project_id name start_date due_date/;
+my @PARAMS = qw/id project_id name start_date due_date archived/;
 __PACKAGE__->mk_accessors(@PARAMS);
 
 sub hash {

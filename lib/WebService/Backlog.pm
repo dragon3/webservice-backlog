@@ -376,6 +376,57 @@ sub addVersion {
     return WebService::Backlog::Version->new( $res->value );
 }
 
+sub updateVersion {
+    my ( $self, $arg ) = @_;
+    my $v;
+    if ( ref($arg) eq 'WebService::Backlog::Version' ) {
+        $v = $arg;
+    }
+    elsif ( ref($arg) eq 'HASH' ) {
+        $v = WebService::Backlog::Version->new($arg);
+    }
+    else {
+        croak(  'arg must be WebService::Backlog::Version object'
+              . ' or reference to hash. ['
+              . ref($arg)
+              . ']' );
+    }
+    croak("id must be specified.")   unless ( $v->id );
+    croak("name must be specified.") unless ( $v->name );
+
+    my $req = RPC::XML::request->new( 'backlog.updateVersion', $v->hash );
+    my $res = $self->{client}->send_request($req);
+    croak "Error backlog.updateVersion : " . $res->value->{faultString}
+      if ( $res->is_fault );
+
+    return WebService::Backlog::Version->new( $res->value );
+}
+
+sub deleteVersion {
+    my ( $self, $arg ) = @_;
+    my $v;
+    if ( ref($arg) eq 'WebService::Backlog::Version' ) {
+        $v = $arg;
+    }
+    elsif ( ref($arg) eq 'HASH' ) {
+        $v = WebService::Backlog::Version->new($arg);
+    }
+    else {
+        croak(  'arg must be WebService::Backlog::Version object'
+              . ' or reference to hash. ['
+              . ref($arg)
+              . ']' );
+    }
+    croak("id must be specified.") unless ( $v->id );
+
+    my $req = RPC::XML::request->new( 'backlog.deleteVersion', $v->hash );
+    my $res = $self->{client}->send_request($req);
+    croak "Error backlog.deleteVersion : " . $res->value->{faultString}
+      if ( $res->is_fault );
+
+    return WebService::Backlog::Version->new( $res->value );
+}
+
 1;
 __END__
 
